@@ -180,7 +180,7 @@ export const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-
 
 export const imgurl = 'https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90';
     
-
+export const success_image_url = "https://www.analyticssteps.com/backend/media/thumbnail/110792/9426471_1596693829_flipkart%20(1).jpg"
 
 function isDate(val) {
     // Cross realm comptatible

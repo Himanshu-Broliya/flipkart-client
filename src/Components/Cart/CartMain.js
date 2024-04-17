@@ -4,10 +4,59 @@ import { CartItem } from './CartItem'
 import { BillView } from './BillView'
 import { BsShieldFillCheck } from "react-icons/bs";
 import { EmptyCart } from './EmptyCart';
+import {loadStripe} from '@stripe/stripe-js'
+import {Stripe} from '@stripe/stripe-js'
 
 export const CartMain = () => {
 
     const cartItem = useSelector(store => store?.cart?.cartItem)
+
+    
+
+    const makePayment = async()=>{
+        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_API_KEY)
+
+    //     const stripeAddress: Stripe.AddressParam = {
+    //         line1: userAddress.street1,
+    //         line2: userAddress.street2,
+    //         city: userAddress.city,
+    //         country: userAddress.country,
+    //         postal_code: userAddress.zip,
+    //         state: userAddress.state,
+    //       };
+    
+    //  const stripeCustomer: Stripe.Customer = await this.stripe.customers.create(
+    //     {
+    //       name: userData.name,
+    //       description: userData.description,
+    //       email: userData.email,
+    //       phone: userData.phoneNumber,
+    //       address: stripeAddress,
+    //     }
+    //   );
+
+        const body={
+            products:cartItem
+        }
+        const headers = {
+            "Content-Type":'application/json'
+        }
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/payment`,{
+            method:'POST',
+            headers:headers,
+            body:JSON.stringify(body)
+        })
+        const session = await response.json();
+
+        const result = stripe.redirectToCheckout({
+            sessionId:session.id
+        });
+
+        if(result.error){
+            console.log(result.error)
+        }
+
+    }
 
 
     return (
@@ -28,7 +77,7 @@ export const CartMain = () => {
                             }
                         </div>
                         <div className='py-4 shadow-[0_-4px_5px_0_rgba(0,0,0,0.1)] px-5 flex items-end '>
-                            <button className=' font-bold text-white bg-[#fb641b] px-16 py-3 ml-auto md:hover:opacity-85'>PLACE ORDER</button>
+                            <button className=' font-bold text-white bg-[#fb641b] px-16 py-3 ml-auto md:hover:opacity-85' onClick={makePayment}>PLACE ORDER</button>
                         </div>
 
                     </div>
