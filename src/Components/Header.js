@@ -1,4 +1,4 @@
-import { flipkart, logo, roundIcon } from '../assets'
+import { logo, roundIcon } from '../assets'
 import { FaRegUserCircle } from "react-icons/fa";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { AiOutlineShop } from "react-icons/ai";
@@ -6,7 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import React, { useState } from 'react';
 import { Login } from './Login';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
@@ -37,8 +37,12 @@ export const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [item, setItem] = useState('')
     const [showList, setShowList] = useState(true)
-    const products = useSelector(store => store.products.products)
+    const products = useSelector(store => store.products.allProducts)
     const cartItem = useSelector(store => store.cart.cartItem)
+    const auth = localStorage.getItem('auth')
+    const name = localStorage.getItem('name')
+    
+    const navigate = useNavigate()
 
 
     const openDialog = () => {
@@ -148,6 +152,10 @@ export const Header = () => {
     );
 
 
+    const logout = ()=>{
+        localStorage.clear();
+        navigate('/')
+    }
 
     return (
         <>
@@ -195,14 +203,14 @@ export const Header = () => {
                     </div>
                 }
                 <div className='hidden md:flex items-center gap-5 lg:gap-8'>
-                    <div className='flex gap-2 items-center cursor-pointer' onClick={openDialog} onMouseOver={handleClick} onMouseOut={handleMouseLeave}><FaRegUserCircle className='text-2xl text-white' /><span className=' text-lg text-white'>Login</span><IoIosArrowDown className='text-white ml-[-3px]' /></div>
+                    <div className='flex gap-2 items-center cursor-pointer' onClick={openDialog} onMouseOver={handleClick} onMouseOut={handleMouseLeave}><FaRegUserCircle className='text-2xl text-white' /><span className=' text-lg text-white'>{auth ? name : "Login"}</span><IoIosArrowDown className='text-white ml-[-3px]' /></div>
                     <Menu
                         id="basic-menu"
                         open={op}
                         onClose={handleClose}
                         anchorEl={anchorEl}
                     >
-                        <MenuItem onClick={handleClose} onMouseOver={() => setOp(true)} ><span onClick={openDialog}>Login</span></MenuItem>
+                        <MenuItem onClick={handleClose} onMouseOver={() => setOp(true)} >{ auth ? <span onClick={logout}>Logout</span> : <span onClick={openDialog}>Login</span>}</MenuItem>
                         <MenuItem onClick={handleClose} onMouseOver={() => setOp(true)} >Profile</MenuItem>
                         <MenuItem onClick={handleClose} onMouseOver={() => setOp(true)} >My account</MenuItem>
                         <MenuItem onClick={handleClose} onMouseOver={() => setOp(true)} >Logout</MenuItem>

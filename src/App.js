@@ -7,6 +7,7 @@ import { Success } from "./Components/Success";
 import { Cancel } from "./Components/Cancel";
 
 
+
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
         <Route path='/cart' element={<CartMain/>} />
         <Route path='/success' element={<Success/>} />
         <Route path='/cancel' element={<Cancel/>} />
+
 
       </Routes>
     </>

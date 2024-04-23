@@ -10,6 +10,7 @@ import { BsFillLightningFill } from "react-icons/bs";
 import { fassured } from '../../Constant/data'
 import { useNavigate } from 'react-router-dom'
 import { addToCart } from '../../redux/cartAction'
+import { Specifications } from './Specifications'
 
 export const ProductDetail = () => {
     let params = useParams()
@@ -47,12 +48,12 @@ export const ProductDetail = () => {
         <div className='bg-gray-200'>
             {
                 product &&
-                <div className='flex flex-col items-center md:items-start md:flex-row bg-white md:mx-20 md:pl-[3.5rem] pr-[2px] py-10'>
+                <div className='flex flex-col items-center md:items-start md:flex-row bg-white md:mx-20 md:pl-[3rem] pr-[2px] py-10'>
 
 
                     <div className='w-full md:w-[35%] '>
-                        <div className='w-full md:border-[1px] border-gray-200 flex items-center justify-center py-4 rounded-sm '>
-                            {product && <img src={product.detailUrl} alt='' className='h-[300px]'/>}
+                        <div className='w-full md:border-[1px] border-gray-200 flex items-center justify-center py-7 rounded-sm '>
+                            {product && <img src={product.detailUrl} alt='' className='h-[350px]'/>}
                         </div>
                         <div className='flex px-5 md:px-0 my-5 gap-3 '>
                             <button className='flex-1 bg-[#ff9f00] font-semibold px-5 md:px-8  py-4 flex items-center justify-center text-white' onClick={()=>addToCartItem(product.id)}> <FaShoppingCart className='text-lg mr-[4px]' /> <span className='font-bold'>ADD TO CART</span></button>
@@ -65,7 +66,7 @@ export const ProductDetail = () => {
                     <div className='w-full px-5 md:px-0 md:w-[65%] md:ml-5 h-[700px]  md:overflow-y-scroll no-scrollbar'>
                         <h1 className='text-lg '>{product.title.longTitle}</h1>
                         <h3 className='text-green-700 font-semibold mt-2 text-sm'>Special price</h3>
-                        <h1 className=' flex items-center '> <FaRupeeSign className='mt-[3px] text-[22px]' /> <span className='text-2xl font-semibold'>{product.price.mrp}</span>  <span className='ml-5 text-sm text-green-700 font-semibold'>{product.price.discount} off</span></h1>
+                        <h1 className=' flex items-center '> <FaRupeeSign className='mt-[3px] text-[22px]' /> <span className='text-2xl font-semibold'>{product.price.cost}</span>  <span className='ml-4 text-gray-400'><s>₹{product.price.mrp}</s></span>  <span className='ml-5 text-sm text-green-700 font-semibold'>{product.price.discount} off</span></h1>
                         <h3 className=' text-sm text-red-500 mt-3 '>Hurry up, Only {product.quantity} left</h3>
                         <div className='mt-3'>
                             <h2 className=' font-semibold mb-2'>Available offers</h2>
@@ -76,7 +77,7 @@ export const ProductDetail = () => {
                         </div>
 
 
-                        <table  className='mt-5'>
+                        <table  className='mt-5 mx-2'>
                             <tbody >
                                 <tr className='py-4'>
                                     <td className=' text-gray-500 font-semibold text-sm mr-7 py-4'>Warranty</td>
@@ -87,15 +88,7 @@ export const ProductDetail = () => {
                                     <td className=' text-gray-500 font-semibold text-sm mr-7 py-4'>Delivery</td>
                                     <td className='text-[14px] pl-5 py-4 font-semibold'>Delivery by {date.toDateString()} | ₹40 </td>
                                 </tr>
-                                <tr className='py-4'>
-                                    <td className=' text-gray-500 font-semibold text-sm mr-7 align-baseline py-4'>Highlights</td>
-                                    <td className='text-[14px] pl-5 font-semibold py-4 '>
-                                        <ul >
-                                            <li className='py-1'>Material: Stainless Steel</li>
-                                            <li className='py-1'>Water, Tea & Soups</li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                
                                 <tr className='py-4'>
                                     <td className=' text-gray-500 font-semibold text-sm mr-7 align-baseline py-4'>Seller</td>
                                     <td className='text-[14px] pl-5 py-4 font-semibold'>
@@ -108,16 +101,16 @@ export const ProductDetail = () => {
                                     </td>
 
                                 </tr>
-                                <tr className='py-4'>
-                                    <img src={fassured} alt='supercoin' />
-
+                                <tr className='py-4' >
+                                    <td colSpan={2}><img src={fassured} alt='supercoin' className='w-[10rem]'/></td>
                                 </tr>
                                 <tr className='py-4'>
                                     <td className=' text-gray-500 font-semibold text-sm mr-7 align-baseline py-4'>Description</td>
-                                    <td className='text-[14px] pl-5 py-4  font-medium'>{product.description}</td>
+                                    <td className='text-[14px] pl-5 py-4 pr-8  font-medium'>{product.description}</td>
                                 </tr>
                             </tbody>
                         </table>
+                        { product?.specifications && <Specifications specifications={product.specifications}/>}
 
                     </div>
                 </div>
