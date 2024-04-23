@@ -23,7 +23,7 @@ export const SmartPhone = () => {
   const fetchMobiles = async () => {
     try {
       let result = await axios.get(`${process.env.REACT_APP_BASE_URL}/products/Mobile`);
-      // console.log(result.data)
+      console.log("Mobile",result.data)
       dispatch(getMobiles(result.data))
     } catch (error) {
       console.log(error)
@@ -33,7 +33,7 @@ export const SmartPhone = () => {
   const fetchFashionProducts = async () => {
     try {
       let result = await axios.get(`${process.env.REACT_APP_BASE_URL}/products/Fashion`);
-      // console.log(result.data)
+      console.log("Fashion",result.data)
       dispatch(getFashionProducts(result.data))
     } catch (error) {
       console.log(error)
@@ -43,7 +43,7 @@ export const SmartPhone = () => {
   const fetchAppliancesProducts = async () => {
     try {
       let result = await axios.get(`${process.env.REACT_APP_BASE_URL}/products/Appliances`);
-      // console.log(result.data)
+      console.log(result.data)
       dispatch(getAppliancesProducts(result.data))
     } catch (error) {
       console.log(error)
